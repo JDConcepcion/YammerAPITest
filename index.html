@@ -3,8 +3,9 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
-<body style="height:100%" onload="changeGroup()">
+<body style="height:100%" onload="embedFeed()">
     <script type="text/javascript" src="https://c64.assets-yammer.com/assets/platform_embed.js"></script>
 
     <script type="text/javascript" data-app-id="Ag784eo8v1vN1fUhRu9w5Q" src="https://c64.assets-yammer.com/assets/platform_js_sdk.js"></script>
@@ -38,7 +39,7 @@
         //      });
         //  }
         //});
-        function changeGroup(groupId) {
+        function embedFeed() {
             document.getElementById("embedded-feed").innerHTML = "";
             yam.connect.embedFeed(
             {
@@ -51,26 +52,77 @@
                 }
             });
         }
-        function test() {
-            yam.getLoginStatus(
-              function (response) {
-                  if (response.authResponse) {
-                      alert("logged in");
-                      console.dir(response); //print user information to the console
-                  }
-                  else {
-                      //authResponse = false if the user is not logged in, or is logged in but hasn't authorized your app yet
-                      alert("logged out");
-                  }
-              }
-            );
+        function getLoginStatus() {
+            yam.platform.request({
+                url: "users.json",     //this is one of many REST endpoints that are available
+                method: "GET",
+                success: function (user) { //print message response information to the console
+                    alert("The request was successful.");
+                    console.dir(user);
+                },
+                error: function (user) {
+                    alert("There was an error with the request.");
+                }
+            });
+        }
+        function getGroupsCurrentUser() {
+            yam.platform.request({
+                url: "users/current.json?include_group_memberships=true",     //this is one of many REST endpoints that are available
+                method: "GET",
+                success: function (user) { //print message response information to the console
+                    alert("The request was successful.");
+                    console.dir(user);
+                },
+                error: function (user) {
+                    alert("There was an error with the request.");
+                }
+            });
+        }
+        function createGroup() {
+
+            if ($("#GroupNameText").val() == "") {
+                alert("Group name field must not be left blank.");
+                return;
+            }
+
+            var name = encodeURIComponent($("#GroupNameText").val());
+            var privateString = "false";
+            if ($("#GroupIsPrivateCheckbox").is(':checked')) privateString = "true";
+
+            yam.platform.request({
+                url: "groups.json?name="+name+"&private="+privateString,     //this is one of many REST endpoints that are available
+                method: "POST",
+                success: function (user) { //print message response information to the console
+                    alert("The request was successful.");
+                    console.dir(user);
+                },
+                error: function (user) {
+                    alert("There was an error with the request.");
+                }
+            });
+
         }
     </script>
     <div id="feed-list" style="vertical-align: top; display:inline-block; margin-right: 20px; font-family: Segoe, Arial, Helvetica, sans-serif, Arial, sans-serif;">
 
     </div>
+    <div id="Controls">
+        <div id="LoginStatusDiv">
+            <button onclick="getLoginStatus()">Get Login Status</button>
+        </div>
+        <div id="GroupMembershipsDiv">
+            <button onclick="getGroupsCurrentUser()">Get Current Group Memberships</button>
+        </div>
+        <div id="CreateGroupDiv">
+            <span>Group Name</span>
+            <input id="GroupNameText" type="text" />
+            <span>Private?</span>
+            <input id="GroupIsPrivateCheckbox" type="checkbox" />
+            <button onclick="createGroup()">Create Group</button>
+        </div>
+    </div>
     <div id="embedded-feed" style="height:100%;width:500px;display:inline-block;"></div>
-    <button onclick="test()">Test</button>
+
     <script>
 
     </script>

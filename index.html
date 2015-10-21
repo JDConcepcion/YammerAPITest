@@ -52,21 +52,23 @@
                 }
             });
         }
-        yam.getLoginStatus(
-          function (response) {
-              if (response.authResponse) {
-                  console.log("logged in");
-                  console.dir(response); //print user information to the console
+        function getLoginStatus() {
+            yam.getLoginStatus(
+              function (response) {
+                  if (response.authResponse) {
+                      console.log("logged in");
+                      console.dir(response); //print user information to the console
+                  }
+                  else {
+                      yam.platform.login(function (response) { //prompt user to login and authorize your app, as necessary
+                          if (response.authResponse) {
+                              console.dir(response); //print user information to the console
+                          }
+                      });
+                  }
               }
-              else {
-                  yam.platform.login(function (response) { //prompt user to login and authorize your app, as necessary
-                      if (response.authResponse) {
-                          console.dir(response); //print user information to the console
-                      }
-                  });
-              }
-          }
-        );
+            );
+        }
         function getGroupsCurrentUser() {
             yam.platform.request({
                 url: "users/current.json?include_group_memberships=true",     //this is one of many REST endpoints that are available

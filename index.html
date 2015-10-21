@@ -95,12 +95,16 @@
                 return;
             }
 
-            var name = encodeURIComponent(JSON.stringify($("#GroupNameText").val()));
+            var name = encodeURIComponent($("#GroupNameText").val());
             var privateString = "false";
             if ($("#GroupIsPrivateCheckbox").is(':checked')) privateString = "true";
 
             yam.platform.request({
-                url: "groups.json?name="+name+"&private="+privateString,     //this is one of many REST endpoints that are available
+                url: "groups.json",     //this is one of many REST endpoints that are available
+                data: {
+                    "name": name,
+                    "private": privateString
+                },
                 method: "POST",
                 success: function (user) { //print message response information to the console
                     alert("The request was successful.");

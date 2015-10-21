@@ -1,1 +1,79 @@
-Hello World
+<!DOCTYPE html>
+<html style="height:100%">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body style="height:100%" onload="changeGroup()">
+    <script type="text/javascript" src="https://c64.assets-yammer.com/assets/platform_embed.js"></script>
+
+    <script type="text/javascript" data-app-id="Ag784eo8v1vN1fUhRu9w5Q" src="https://c64.assets-yammer.com/assets/platform_js_sdk.js"></script>
+    <span id="yammer-login"></span>
+    <script>
+        //yam.connect.loginButton('#yammer-login', function (resp) {
+        //  if (resp.authResponse) {
+        //      document.getElementById('yammer-login').style.display = "none";
+
+        //      yam.platform.request({
+        //          url: "users/current.json",
+        //          method: "GET",
+        //          data: {
+        //              "include_group_memberships": true
+        //          },
+        //          success: function (user) {
+        //              var ul = document.createElement("ul");
+        //              for (var i = 0; i < user.group_memberships.length; i++) {
+        //                  var li = document.createElement("li");
+        //                  var a = document.createElement("a");
+        //                  a.innerText = user.group_memberships[i].full_name;
+        //                  a.href = "javascript:changeGroup(" + user.group_memberships[i].id + ")";
+        //                  li.appendChild(a);
+        //                  ul.appendChild(li);
+        //              }
+        //              document.getElementById("feed-list").appendChild(ul);
+        //          },
+        //          error: function (error) {
+        //              alert(error);
+        //          }
+        //      });
+        //  }
+        //});
+        function changeGroup(groupId) {
+            document.getElementById("embedded-feed").innerHTML = "";
+            yam.connect.embedFeed(
+            {
+                /*"feedType": "group",
+                "feedId": groupId,*/
+                container: '#embedded-feed',
+                "network": 'sonomapartners.com',
+                "config": {
+                    "use_sso": false
+                }
+            });
+            yam.platform.request({
+                url: "https://api.yammer.com/api/v1/users.json",     //this is one of many REST endpoints that are available
+                method: "GET",
+                data: {    //use the data object literal to specify parameters, as documented in the REST API section of this developer site
+                    "letter": "a",
+                    "page": "2",
+                },
+                success: function (user) { //print message response information to the console
+                    alert("The request was successful.");
+                    console.dir(user);
+                },
+                error: function (error) {
+                    alert("There was an error with the request.");
+                }
+            });
+
+        }
+    </script>
+    <div id="feed-list" style="vertical-align: top; display:inline-block; margin-right: 20px; font-family: Segoe, Arial, Helvetica, sans-serif, Arial, sans-serif;">
+
+    </div>
+    <div id="embedded-feed" style="height:100%;width:500px;display:inline-block;"></div>
+    <script>
+
+    </script>
+</body>
+</html>

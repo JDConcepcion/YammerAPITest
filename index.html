@@ -76,9 +76,9 @@
                 success: function (user) { //print message response information to the console
                     var groups = user.group_memberships;
                     var groupsString = "";
-                    foreach (group in groups)
+                    for (var i = 0; i < groups.length; i++)
                     {
-                        groupsString = groupsString.concat(group.full_name + ", ");
+                        groupsString = groupsString.concat(groups[i].full_name + ", ");
                     }
                     alert(groupsString);
                     console.dir(user);

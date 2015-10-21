@@ -74,7 +74,13 @@
                 url: "users/current.json?include_group_memberships=true",     //this is one of many REST endpoints that are available
                 method: "GET",
                 success: function (user) { //print message response information to the console
-                    alert("The request was successful.");
+                    var groups = user.group_memberships;
+                    var groupsString = "";
+                    foreach (group in groups)
+                    {
+                        groupsString = groupsString.concat(group.full_name + ", ");
+                    }
+                    alert(groupsString);
                     console.dir(user);
                 },
                 error: function (user) {
@@ -89,7 +95,7 @@
                 return;
             }
 
-            var name = encodeURIComponent($("#GroupNameText").val());
+            var name = $("#GroupNameText").val();
             var privateString = "false";
             if ($("#GroupIsPrivateCheckbox").is(':checked')) privateString = "true";
 

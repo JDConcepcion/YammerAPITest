@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html style="height:100%">
 <head>
     <title></title>
@@ -41,14 +41,20 @@
         //});
         function embedFeed() {
             document.getElementById("embedded-feed").innerHTML = "";
-            yam.connect.embedFeed(
-            {
-                /*"feedType": "group",
-                "feedId": groupId,*/
-                container: '#embedded-feed',
-                "network": 'sonomapartners.com',
-                "config": {
-                    "use_sso": false
+            yam.platform.login(function (response) { //prompt user to login and authorize your app, as necessary
+                if (response.authResponse) {
+                    console.dir(response); //print user information to the console
+                    yam.connect.embedFeed(
+                    {
+                        /*"feedType": "group",
+                        "feedId": groupId,*/
+                        container: '#embedded-feed',
+                        "network": 'sonomapartners.com',
+                        "config": {
+                            "use_sso": false,
+                            "header": false
+                        }
+                    });
                 }
             });
         }

@@ -3,9 +3,21 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
+    <style>
+        input[type=text] {
+            background-color: #fff;
+            border: 1px solid #dde0e6;
+        }
+        button {
+            color: #495361;
+            background-color: #f3f5f8;
+            border: 1px solid #dde0e6;
+        }
+    </style>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
-<body style="height:100%" onload="embedFeed()">
+<body style="height: 100%; background: #f3f5f8; font-family: 'Segoe',Helvetica,Arial,sans-serif;" onload="embedFeed()">
     <script type="text/javascript" src="https://c64.assets-yammer.com/assets/platform_embed.js"></script>
 
     <script type="text/javascript" data-app-id="Ag784eo8v1vN1fUhRu9w5Q" src="https://c64.assets-yammer.com/assets/platform_js_sdk.js"></script>
@@ -126,22 +138,23 @@
     <div id="feed-list" style="vertical-align: top; display:inline-block; margin-right: 20px; font-family: Segoe, Arial, Helvetica, sans-serif, Arial, sans-serif;">
 
     </div>
-    <div id="Controls">
-        <div id="LoginStatusDiv">
-            <button onclick="getLoginStatus()">Get Login Status</button>
+    <div id="YammerPaneHeader" style="height:15%">
+        <div id="Title" style="padding: 20px; background: #396B9A; width: 460px; ">
+            <div style="color:white; margin: 10px; margin-bottom:0px; ">Yammer Web App</div>
         </div>
-        <div id="GroupMembershipsDiv">
-            <button onclick="getGroupsCurrentUser()">Get Current Group Memberships</button>
-        </div>
-        <div id="CreateGroupDiv">
-            <span>Group Name</span>
-            <input id="GroupNameText" type="text" />
-            <span>Private?</span>
-            <input id="GroupIsPrivateCheckbox" type="checkbox" />
-            <button onclick="createGroup()">Create Group</button>
+        <div id="Controls" style="color: #343A41; padding: 10px; background: #f3f5f8; width: 480px;">
+            <div id="GroupMembershipsDiv">
+                <button onclick="getGroupsCurrentUser()">Get Current Group Memberships</button>
+            </div>
+            <div id="CreateGroupDiv">
+                <input id="GroupNameText" type="text" value="Group Name" />
+                <span>Private?</span>
+                <input id="GroupIsPrivateCheckbox" type="checkbox" />
+                <button onclick="createGroup()">Create Group</button>
+            </div>
         </div>
     </div>
-    <div id="embedded-feed" style="height:100%;width:500px;display:inline-block;"></div>
+    <div id="embedded-feed" style="height:85%;width:500px;display:inline-block;"></div>
 
     <script>
 
